@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path = require('path');
 
 
 dotenv.config();
@@ -47,6 +48,9 @@ const ProjectRoutes = require('./routes/ProjectRoutes');
 const SkillRoutes = require('./routes/SkillRoutes');
 const ExperienceRoutes = require('./routes/ExperienceRoutes');
 const contactRoutes = require('./routes/ContactRoutes');
+const CertificatesRoutes = require('./routes/CertificatesRoutes');
+const testimoniesRoutes = require('./routes/testimoniesRoutes');
+const resumeRoutes = require('./routes/resumeRoutes');
 
 
 
@@ -55,6 +59,9 @@ app.use('/api/project', ProjectRoutes);
 app.use('/api/skill', SkillRoutes);
 app.use('/api/experience', ExperienceRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/certificates', CertificatesRoutes);
+app.use('/api/testimonies', testimoniesRoutes);
+app.use('/api/resume', resumeRoutes);
 
 app.use((req, res) => {
     res.status(404).json({
@@ -69,3 +76,5 @@ app.listen(PORT, () => {
     console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`===================================`);
 });
+
+const port =5000;
