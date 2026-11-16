@@ -23,6 +23,8 @@ app.get('/', (req, res) => {
     });
 });
 
+app.use('/uplouds', express.static(path.join(__dirname, 'uploads')));
+
 app.get('/api/status', (req, res) => {
     res.status(200).json({
         success: true,
@@ -51,6 +53,7 @@ const contactRoutes = require('./routes/ContactRoutes');
 const CertificatesRoutes = require('./routes/CertificatesRoutes');
 const testimoniesRoutes = require('./routes/testimoniesRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 
 
@@ -62,6 +65,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/certificates', CertificatesRoutes);
 app.use('/api/testimonies', testimoniesRoutes);
 app.use('/api/resume', resumeRoutes);
+app.use('/api/auth', authRoutes); 
 
 app.use((req, res) => {
     res.status(404).json({
