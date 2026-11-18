@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // 1. Mencari user berdasarkan username (untuk cek duplikasi / login)
-const findByUsername = async (username) => {
+const findByusersname = async (username) => {
     const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
     return rows[0];
 };
@@ -40,7 +40,7 @@ const getAllUsers = async () => {
 };
 
 module.exports = {
-    findByUsername,
+    findByusersname,
     findByEmail,
     findById,
     createUser,

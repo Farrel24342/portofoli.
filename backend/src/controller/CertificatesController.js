@@ -12,7 +12,7 @@ const getAllCertificates = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'Sertifikat tidak ditemukan',
             error: error.message
         });
     }
@@ -38,7 +38,7 @@ const getCertificateById = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'Data sertifikat tidak ditemukan',
             error: error.message
         });
     }
@@ -66,7 +66,7 @@ const createCertificate = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'Data sertifikat gagal buat',
             error: error.message
         });
     }
@@ -91,7 +91,7 @@ const updateCertificate = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,
-                message: 'Data sertifikat tidak ditemukan'
+                message: 'Gagal memperbarui sertifikat.'
             });
         }
 
@@ -102,7 +102,7 @@ const updateCertificate = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'Gagal memperbarui sertifikat',
             error: error.message
         });
     }
@@ -117,7 +117,7 @@ const deleteCertificate = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,
-                message: 'Data sertifikat tidak ditemukan'
+                message: 'Data sertifikat tidak dapat dihapus'
             });
         }
 
@@ -128,7 +128,7 @@ const deleteCertificate = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'Gagal menghapus sertifikat',
             error: error.message
         });
     }

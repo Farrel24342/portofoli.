@@ -12,7 +12,7 @@ const getAllTestimonies = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'gagal menampilkan data testimoni',
             error: error.message
         });
     }
@@ -61,7 +61,7 @@ const createTestimoni = async (req, res) => {
 
         res.status(201).json({
             success: true,
-            message: 'Testimoni berhasil ditambahkan',
+            message: ' Data Testimoni berhasil ditambahkan',
             data: { id: result.insertId }
         });
     } catch (error) {
@@ -92,7 +92,7 @@ const updateTestimoni = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,
-                message: 'Data testimoni tidak ditemukan'
+                message: 'Data testimoni tidak dapat di Update'
             });
         }
 
@@ -118,7 +118,7 @@ const deleteTestimoni = async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,
-                message: 'Data testimoni tidak ditemukan'
+                message: 'Data testimoni gagal dihapus'
             });
         }
 

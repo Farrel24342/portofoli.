@@ -4,6 +4,6 @@ const ProfileController = require('../controller/ProfileController');
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
 router.get('/profile', verifyToken, ProfileController.getProfile);
-router.put('/profile/:id', ProfileController.updateProfile);
+router.put('/profile/:id', verifyToken, ProfileController.updateProfile);
 
 module.exports = router;

@@ -46,7 +46,7 @@ app.get('/api/biodata', (req, res) => {
 });
 
 const ProfileRoutes = require('./routes/ProfileRoutes');
-const ProjectRoutes = require('./routes/ProjectRoutes');
+const ProjectRoutes = require('./routes/projectRoutes');
 const SkillRoutes = require('./routes/SkillRoutes');
 const ExperienceRoutes = require('./routes/ExperienceRoutes');
 const contactRoutes = require('./routes/ContactRoutes');

@@ -17,8 +17,8 @@ const getTestimoniById = async (id) => {
 const createTestimoni = async (data) => {
     const { name, role, company, message, avatar_url, rating } = data;
     const [result] = await db.query(
-        'INSERT INTO testimonies (name, role, company, message, avatar_url, rating) VALUES (?, ?, ?, ?, ?, ?)',
-        [
+            'INSERT INTO testimonies (name, role, company, message, avatar_url, rating) VALUES (?, ?, ?, ?, ?, ?)',
+            [
             name, 
             role, 
             company || null, 

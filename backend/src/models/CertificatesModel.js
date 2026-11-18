@@ -1,142 +1,47 @@
 const db = require('../config/db');
-// 1. GET ALL CERTIFICATES
-const getAllCertificates = async (req, res) => {
-    try {
-        const certificates = await certificateModel.getAllCertificates();
-        res.status(200).json({
-            success: true,
-            total: certificates.length,
-            data: certificates
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
-    }
+
+// 1. GET ALL - Mengambil semua data sertifikat (diurutkan dari tanggal terbaru)
+const getAllCertificates = async () => {
+  const [rows] = await db.query('SELECT * FROM certificates ORDER BY issue_date DESC');
+  return rows;
 };
 
-// 2. GET CERTIFICATE BY ID
-const getCertificateById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const certificate = await certificateModel.getCertificateById(id);
-
-        if (!certificate) {
-            return res.status(404).json({
-                success: false,
-                message: 'Data sertifikat tidak ditemukan'
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            data: certificate
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
-    }
+// 2. GET BY ID - Mengambil 1 data sertifikat berdasarkan ID
+const getCertificateById = async (id) => {
+  const [rows] = await db.query('SELECT * FROM certificates WHERE id = ?', [id]);
+  return rows[0];
 };
 
-// 3. CREATE CERTIFICATE
-const createCertificate = async (req, res) => {
-    try {
-        const data = req.body;
+// 3. CREATE - Menambahkan sertifikat baru ke database
+const createCertificates = async (data) => {
+  const { name, issuer, issue_date, expiration_date, credential_id, credential_url, description } = data;
+  const [result] = await db.query(
+    'INSERT INTO certificates (name, issuer, issue_date, expiration_date, credential_id, credential_url, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [name, issuer, issue_date, expiration_date || null, credential_id || null, credential_url || null, description || null]
+  );
+  return result;
+}; 
 
-        // Validasi input wajib
-        if (!data.name || !data.issuer || !data.issue_date) {
-            return res.status(400).json({
-                success: false,
-                message: 'Nama sertifikat (name), penerbit (issuer), dan tanggal terbit (issue_date) wajib diisi'
-            });
-        }
-
-        const result = await certificateModel.createCertificate(data);
-        res.status(201).json({
-            success: true,
-            message: 'Sertifikat berhasil ditambahkan',
-            data: { id: result.insertId }
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
-    }
+// 4. UPDATE - Memperbarui data sertifikat berdasarkan ID
+const updateCertificate = async (id, data) => {
+  const { name, issuer, issue_date, expiration_date, credential_id, credential_url, description } = data;
+  const [result] = await db.query(
+    'UPDATE certificates SET name = ?, issuer = ?, issue_date = ?, expiration_date = ?, credential_id = ?, credential_url = ?, description = ? WHERE id = ?',
+    [name, issuer, issue_date, expiration_date || null, credential_id || null, credential_url || null, description || null, id]
+  );
+  return result;
 };
 
-// 4. UPDATE CERTIFICATE
-const updateCertificate = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const data = req.body;
-
-        // Validasi input wajib
-        if (!data.name || !data.issuer || !data.issue_date) {
-            return res.status(400).json({
-                success: false,
-                message: 'Nama sertifikat (name), penerbit (issuer), dan tanggal terbit (issue_date) wajib diisi'
-            });
-        }
-
-        const result = await certificateModel.updateCertificate(id, data);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Data sertifikat tidak ditemukan'
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: 'Sertifikat berhasil diperbarui'
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
-    }
-};
-
-// 5. DELETE CERTIFICATE
-const deleteCertificate = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = await certificateModel.deleteCertificate(id);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'Data sertifikat tidak ditemukan'
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            message: 'Sertifikat berhasil dihapus'
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server Error',
-            error: error.message
-        });
-    }
+// 5. DELETE - Menghapus sertifikat dari database berdasarkan ID
+const deleteCertificate = async (id) => {
+  const [result] = await db.query('DELETE FROM certificates WHERE id = ?', [id]);
+  return result;
 };
 
 module.exports = {
-    getAllCertificates,
-    getCertificateById,
-    createCertificate,
-    updateCertificate,
-    deleteCertificate
+  getAllCertificates,
+  getCertificateById,
+  createCertificates,
+  updateCertificate,
+  deleteCertificate
 };

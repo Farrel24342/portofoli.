@@ -4,9 +4,9 @@ const db = require('../config/db');
 // FUNGSI 1: Mengambil SEMUA data proyek
 // ============================================================
 
-const getAllProjects = async () => {
+const getAllproject = async () => {
     const [rows] = await db.query(
-        'SELECT * FROM projects ORDER BY created_at DESC'
+        'SELECT * FROM project ORDER BY created_at DESC'
     );
 
     return rows;
@@ -16,9 +16,9 @@ const getAllProjects = async () => {
 // FUNGSI 2: Mengambil SATU proyek berdasarkan ID
 // ============================================================
 
-const getProjectById = async (id) => {
+const getprojectById = async (id) => {
     const [rows] = await db.query(
-        'SELECT * FROM projects WHERE id = ?',
+        'SELECT * FROM project WHERE id = ?',
         [id]
     );
 
@@ -29,87 +29,40 @@ const getProjectById = async (id) => {
 // FUNGSI 3: Menambahkan proyek baru (CREATE)
 // ============================================================
 
-const createProject = async (data) => {
-    const {
-        title,
-        description,
-        category,
-        image_url,
-        demo_url,
-        github_url,
-        tech_stack,
-        is_featured
-    } = data;
+const createproject = async (data) => {
+    const { title, description, category, image_url, demo_url, github_url, tech_stack, is_featured } = data;
 
     const [result] = await db.query(
-        `INSERT INTO projects
-        (title, description, category, image_url, demo_url, github_url, tech_stack, is_featured)
+        `INSERT INTO project (title, description, category, image_url, demo_url, github_url, tech_stack, is_featured)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-            title,
-            description,
-            category,
-            image_url,
-            demo_url,
-            github_url,
-            tech_stack,
-            is_featured || false
-        ]
+        [title, description, category, image_url, demo_url, github_url, tech_stack, is_featured || false]
     );
-
     return result;
 };
-
 // ============================================================
 // FUNGSI 4: Memperbarui data proyek (UPDATE)
 // ============================================================
 
-const updateProject = async (id, data) => {
-    const {
-        title,
-        description,
-        category,
-        image_url,
-        demo_url,
-        github_url,
-        tech_stack,
-        is_featured
-    } = data;
+const updateproject = async (id, data) => {
+    const { title, description, category, image_url, demo_url, github_url, tech_stack, is_featured } = data;
 
     const [result] = await db.query(
-        `UPDATE projects SET
-            title = ?,
-            description = ?,
-            category = ?,
-            image_url = ?,
-            demo_url = ?,
-            github_url = ?,
-            tech_stack = ?,
-            is_featured = ?
+        `UPDATE project SET 
+        title = ?, description = ?, category = ?,
+        image_url = ?, demo_url = ?, github_url = ?, 
+        tech_stack = ?, is_featured = ?
         WHERE id = ?`,
-        [
-            title,
-            description,
-            category,
-            image_url,
-            demo_url,
-            github_url,
-            tech_stack,
-            is_featured,
-            id
-        ]
+        [title, description, category, image_url, demo_url, github_url, tech_stack, is_featured, id]
     );
-
     return result;
 };
-
 // ============================================================
 // FUNGSI 5: Menghapus proyek (DELETE)
 // ============================================================
 
-const deleteProject = async (id) => {
+const deleteproject = async (id) => {
     const [result] = await db.query(
-        'DELETE FROM projects WHERE id = ?',
+        'DELETE FROM project WHERE id = ?',
         [id]
     );
 
@@ -121,9 +74,9 @@ const deleteProject = async (id) => {
 // ============================================================
 
 module.exports = {
-    getAllProjects,
-    getProjectById,
-    createProject,
-    updateProject,
-    deleteProject
+    getAllproject,
+    getprojectById,
+    createproject,
+    updateproject,
+    deleteproject
 };

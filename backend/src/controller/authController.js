@@ -16,7 +16,7 @@ async function register(req, res) {
         }
 
         // Cek apakah username sudah dipakai
-        const existingUsername = await usersModel.findByUsername(username);
+        const existingUsername = await usersModel.findByusersname(username);
         if (existingUsername) {
             return res.status(400).json({
                 success: false,
@@ -38,7 +38,7 @@ async function register(req, res) {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Tentukan role (default ke 'users' jika tidak diisi)
-        const usersRole = role || 'users';
+        const usersRole = role || 'user';
 
         // Simpan users baru ke database
         const usersId = await usersModel.createUser({

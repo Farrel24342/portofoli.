@@ -6,13 +6,13 @@ const testimoniController = require('../controller/testimoniesController');
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
 
 // GET - Mengambil semua testimoni
-router.get('/', testimoniController.getAllTestimonies);
+router.get('/',verifyToken, testimoniController.getAllTestimonies);
 
 // GET - Mengambil testimoni berdasarkan ID
-router.get('/:id', testimoniController.getTestimoniById);
+router.get('/:id', verifyToken, testimoniController.getTestimoniById);
 
 // POST - Menambahkan testimoni
-router.post('/', verifyToken, authorizeRoles('admin', 'user'), testimoniController.createTestimoni);
+router.post('/', verifyToken, authorizeRoles('admin'), testimoniController.createTestimoni);
 
 // PUT - Memperbarui testimoni
 router.put('/:id', verifyToken, authorizeRoles('admin'), testimoniController.updateTestimoni);

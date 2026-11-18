@@ -1,12 +1,12 @@
-const projectModel = require('../models/ProjectModels');
+const projectModel = require('../models/projectModels');
 
 // ============================================================
 // 1. Mengambil semua proyek (GET ALL)
 // ============================================================
 
-const getAllProjects = async (req, res) => {
+const getAllproject = async (req, res) => {
     try {
-        const projects = await projectModel.getAllProjects();
+        const projects = await projectModel.getAllproject();
 
         res.status(200).json({
             success: true,
@@ -15,7 +15,7 @@ const getAllProjects = async (req, res) => {
             data: projects
         });
     } catch (error) {
-        console.error('Error getAllProjects:', error.message);
+        console.error('Error getAllproject:', error.message);
 
         res.status(500).json({
             success: false,
@@ -29,10 +29,10 @@ const getAllProjects = async (req, res) => {
 // 2. Mengambil satu proyek berdasarkan ID (GET BY ID)
 // ============================================================
 
-const getProjectById = async (req, res) => {
+const getprojectById = async (req, res) => {
     try {
         const { id } = req.params;
-        const project = await projectModel.getProjectById(id);
+        const project = await projectModel.getprojectById(id);
 
         if (!project) {
             return res.status(404).json({
@@ -47,7 +47,7 @@ const getProjectById = async (req, res) => {
             data: project
         });
     } catch (error) {
-        console.error('Error getProjectById:', error.message);
+        console.error('Error getprojectById:', error.message);
 
         res.status(500).json({
             success: false,
@@ -61,7 +61,7 @@ const getProjectById = async (req, res) => {
 // 3. Menambahkan proyek baru (CREATE / POST)
 // ============================================================
 
-const createProject = async (req, res) => {
+const createproject = async (req, res) => {
     try {
         const data = req.body;
 
@@ -73,7 +73,7 @@ const createProject = async (req, res) => {
             });
         }
 
-        const result = await projectModel.createProject(data);
+        const result = await projectModel.createproject(data);
 
         res.status(201).json({
             success: true,
@@ -81,7 +81,7 @@ const createProject = async (req, res) => {
             data: { id: result.insertId }
         });
     } catch (error) {
-        console.error('Error createProject:', error.message);
+        console.error('Error createproject:', error.message);
 
         res.status(500).json({
             success: false,
@@ -95,7 +95,7 @@ const createProject = async (req, res) => {
 // 4. Memperbarui data proyek (UPDATE / PUT)
 // ============================================================
 
-const updateProject = async (req, res) => {
+const updateproject = async (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -108,7 +108,7 @@ const updateProject = async (req, res) => {
             });
         }
 
-        const result = await projectModel.updateProject(id, data);
+        const result = await projectModel.updateproject(id, data);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -123,7 +123,7 @@ const updateProject = async (req, res) => {
             data: result
         });
     } catch (error) {
-        console.error('Error updateProject:', error.message);
+        console.error('Error updateproject:', error.message);
 
         res.status(500).json({
             success: false,
@@ -137,11 +137,11 @@ const updateProject = async (req, res) => {
 // 5. Menghapus proyek (DELETE)
 // ============================================================
 
-const deleteProject = async (req, res) => {
+const deleteproject = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const result = await projectModel.deleteProject(id);
+        const result = await projectModel.deleteproject(id);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -155,7 +155,7 @@ const deleteProject = async (req, res) => {
             message: 'Proyek berhasil dihapus.'
         });
     } catch (error) {
-        console.error('Error deleteProject:', error.message);
+        console.error('Error deleteproject:', error.message);
 
         res.status(500).json({
             success: false,
@@ -170,9 +170,9 @@ const deleteProject = async (req, res) => {
 // ============================================================
 
 module.exports = {
-    getAllProjects,
-    getProjectById,
-    createProject,
-    updateProject,
-    deleteProject
+    getAllproject,
+    getprojectById,
+    createproject,
+    updateproject,
+    deleteproject
 };

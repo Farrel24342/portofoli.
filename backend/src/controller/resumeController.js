@@ -17,7 +17,7 @@ const getAllResumes = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Server Error',
+            message: 'tidak dapat melihat data CV',
             error: error.message
         });
     }
@@ -68,6 +68,7 @@ const getResumeById = async (req, res) => {
         res.status(200).json({
             success: true,
             data: resume
+            
         });
     } catch (error) {
         res.status(500).json({
